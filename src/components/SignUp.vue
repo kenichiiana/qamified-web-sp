@@ -39,9 +39,10 @@
                     </span>
                 </div>
               </div>
-              <button class="button is-block is-primary is-small is-fullwidth" v-on:click.prevent="signUp">
+              <button class="button is-block is-primary is-small is-fullwidth" v-if="!isLoading" v-on:click.prevent="signUp">
                 Register
               </button>
+              <button class="button is-loading is-primary is-small is-fullwidth" v-if="isLoading"></button>
             </form>
           </div>
           <div class="box">
@@ -73,6 +74,9 @@ export default {
   computed: {
     getUser () {
       return this.$store.getters.getUser
+    },
+    isLoading () {
+      return this.$store.getters.isLoading
     }
   },
   watch: {
