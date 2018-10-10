@@ -39,14 +39,14 @@
                     </span>
                 </div>
               </div>
-              <button class="button is-block is-primary is-small is-fullwidth" v-on:click.prevent="addUser">
+              <button class="button is-block is-primary is-small is-fullwidth" v-on:click.prevent="signUp">
                 Register
               </button>
             </form>
           </div>
           <div class="box">
             <h6 class="subtitle has-text-grey is-size-6"> Already have an account?
-              <a v-on:click="goto('/login')"> Login here </a>
+              <a v-on:click="goto('/sign-in')"> Login here </a>
             </h6>
           </div>
         </div>
@@ -59,7 +59,7 @@
 import '../../node_modules/bulma/css/bulma.css'
 import '../../node_modules/font-awesome/css/font-awesome.css'
 export default {
-  name: 'Register',
+  name: 'SignUp',
   data () {
     return {
       newUser: {
@@ -70,12 +70,24 @@ export default {
       }
     }
   },
+  computed: {
+    getUser () {
+      return this.$store.getters.getUser
+    }
+  },
+  watch: {
+    getUser (value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push('/welcome')
+      }
+    }
+  },
   methods: {
     goto (route) {
       this.route = route
       this.$router.push(route)
     },
-    addUser: function () {
+    signUp: function () {
       if (this.newUser.password === this.newUser.confirmPassword) {
         this.$store.dispatch('signUp', {email: this.newUser.email, password: this.newUser.password, username: this.newUser.username})
       }

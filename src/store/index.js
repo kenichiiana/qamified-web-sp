@@ -24,12 +24,31 @@ export const store = new Vuex.Store({
         user => {
           const newUser = {
             id: user.user.uid
+            // add other necessary attributes here
+          }
+          commit('setUser', newUser)
+          this.$router.push('/welcome')
+        }
+      ).catch(
+        error => {
+          console.log(error)
+          // handle errors here
+        }
+      )
+    },
+    signIn ({commit}, payload) {
+      auth.signInWithEmailAndPassword(payload.email, payload.password).then(
+        user => {
+          const newUser = {
+            id: user.user.uid
+            // add other necessary attributes here
           }
           commit('setUser', newUser)
         }
       ).catch(
         error => {
           console.log(error)
+          // handle errors here
         }
       )
     }
